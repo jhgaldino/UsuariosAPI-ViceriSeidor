@@ -2,7 +2,6 @@ using FluentValidation;
 using UsuariosAPI_ViceriSeidor.src.Data;
 using UsuariosAPI_ViceriSeidor.src.Models;
 using UsuariosAPI_ViceriSeidor.src.Services;
-using UsuariosAPI_ViceriSeidor.src.Validations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
