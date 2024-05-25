@@ -6,66 +6,118 @@ using UsuariosAPI_ViceriSeidor.src.Models;
 using UsuariosAPI_ViceriSeidor.src.Data;
 using UsuariosAPI_ViceriSeidor.src.Services;
 using UsuariosAPI_ViceriSeidor.src.Dtos;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace UsuariosAPI_ViceriSeidor.src.Controllers
-
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        private readonly AppDbContext _context;
-        private readonly UsuarioService _usuarioService;
+        private readonly IUsuarioService _usuarioService;
 
-        public UsuariosController(AppDbContext context, UsuarioService usuarioService)
+        public UsuariosController(IUsuarioService usuarioService)
         {
-            _context = context;
             _usuarioService = usuarioService;
             
         }
 
         // Método de cadastro de usuário
         [HttpPost]
-        public async Task<ActionResult<Usuario>> Post([FromBody] AdicionarUsuarioRequest request)
+        public async Task<ActionResult<AdicionarUsuarioResponse>> Post([FromBody] AdicionarUsuarioRequest request)
         {
             var result = await _usuarioService.CadastrarUsuario(request);
 
-            if (result.FirstError.Type == ErrorOr.ErrorType.Validation)
+            if (result.IsError)
             {
-                return BadRequest(result.Errors);
+                if (result.FirstError.Type == ErrorOr.ErrorType.Validation)
+                {
+                    return BadRequest(result.Errors);
+                }
+                else if (result.FirstError == Errors.Usuario.DuplicateEmailOrCpf)
+                {
+                    return Conflict(new { message = "Usuário com este e-mail ou CPF já existe." });
+                }
+                else
+                {
+                    return StatusCode(500, result.Errors);
+                }
             }
-            return CreatedAtRoute("GetUsuario", new { id = result.Value.Id }, result.Value);
+
+            var uri = $"{Request.GetEncodedUrl()}/{result.Value.Id}"; 
+            return Created(uri, result.Value);
         }
 
 
         // Método de listagem de usuários
-        public async Task<List<Usuario>> ListarUsuarios()
+        [HttpGet]
+        public async Task<IEnumerable<ListarUsuarioResponse>> Get()
         {
-            return await _context.Usuarios.ToListAsync();
+            return await _usuarioService.ListarUsuarios();
         }
 
         // Método de listagem de usuário por id
-        public async Task<Usuario?> ListarUsuarioPorId(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ListarUsuarioResponse>> GetId(int id)
         {
-            return await _context.Usuarios.FindAsync(id);
+            var result = await _usuarioService.ListarUsuarioPorId(id);
+
+            if (result.IsError)
+            {
+                if (result.FirstError == Errors.Usuario.NotFound)
+                {
+                    return NotFound(new { message = "Usuário não encontrado" });
+                }
+                else {
+                    return StatusCode(500, result.Errors);
+                }
+            }
+
+            return Ok(result.Value);
         }
 
         // Método de atualização de usuário
-        public async Task AtualizarUsuarioPorId(int id)
+        [HttpPut("{id}")]
+        public async Task<ActionResult<AtualizarUsuarioResponse>> Put(int id, [FromBody] AtualizarUsuarioRequest request)
         {
-            _context.Entry(id).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            var result = await _usuarioService.AtualizarUsuario(id, request);
+
+            if (result.IsError)
+            {
+                if (result.FirstError.Type == ErrorOr.ErrorType.Validation)
+                {
+                    return BadRequest(result.Errors);
+                }
+                else if (result.FirstError == Errors.Usuario.DuplicateEmailOrCpf)
+                {
+                    return Conflict(new { message = "Usuário com este e-mail ou CPF já existe." });
+                }
+                else {
+                    return StatusCode(500, result.Errors);
+                }
+            }
+
+            return Ok(result.Value);
         }
 
         // Método de remoção de usuário por id
-        public async Task RemoverUsuarioPorId(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            var usuario = await _usuarioService.ListarUsuarioPorId(id);
-            if (usuario != null)
+            var result = await _usuarioService.RemoverUsuarioPorId(id);
+
+            if (result.IsError)
             {
-                _context.Usuarios.Remove(usuario);
-                await _context.SaveChangesAsync();
+                if (result.FirstError == Errors.Usuario.NotFound)
+                {
+                    return NotFound(new { message = "Usuário não encontrado" });
+                }
+                else {
+                    return BadRequest(result.Errors);
+                }
             }
+
+            return Ok(new { message = "Usuário excluído com sucesso" });
         }
     }
 }

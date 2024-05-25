@@ -1,4 +1,5 @@
 ﻿using ErrorOr;
+
 namespace UsuariosAPI_ViceriSeidor.src
 {
     public static class Errors
@@ -14,9 +15,9 @@ namespace UsuariosAPI_ViceriSeidor.src
                 description: "Usuário não encontrado.");
         }
 
-        public static class None
+        public class None
         {
-               public static readonly Error NotFound = Error.NotFound(
+            public static readonly Error NotFound = Error.NotFound(
                 code: "None.NotFound",
                 description: "Nenhum registro encontrado.");
         }

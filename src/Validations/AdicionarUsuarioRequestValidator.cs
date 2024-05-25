@@ -1,11 +1,13 @@
 ﻿using FluentValidation;
 using UsuariosAPI_ViceriSeidor.src.Dtos;
+
 namespace UsuariosAPI_ViceriSeidor.src.Validations
 {
     public class AdicionarUsuarioRequestValidator : AbstractValidator<AdicionarUsuarioRequest>
     {
         public AdicionarUsuarioRequestValidator()
         {
+            // Regras de validação para o cadastro de um novo usuário
             RuleFor(x => x.Nome)
                 .NotEmpty()
                 .WithMessage("Nome é obrigatório");
@@ -28,7 +30,12 @@ namespace UsuariosAPI_ViceriSeidor.src.Validations
                 .Must(CPFValido)
                 .WithMessage("CPF inválido");
 
+            RuleFor(x => x.DataNasc)
+                .NotEmpty()
+                .WithMessage("Data de nascimento é obrigatória");
         }
+
+        // Validação de CPF, retirado de https://gist.github.com/rdakar/dba890b5e2cbdeb7c62c0dee9f627a7f
         private static bool CPFValido(string cpf)
         {
             int[] multiplicador1 = new int[9] { 10, 9, 8, 7, 6, 5, 4, 3, 2 };
@@ -73,8 +80,5 @@ namespace UsuariosAPI_ViceriSeidor.src.Validations
 
             return cpf.EndsWith(digito);
         }
-
-
     }
-
 }

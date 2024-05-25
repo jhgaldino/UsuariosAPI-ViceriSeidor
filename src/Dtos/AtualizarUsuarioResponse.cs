@@ -1,7 +1,7 @@
 ﻿namespace UsuariosAPI_ViceriSeidor.src.Dtos
 {
     #pragma warning disable CS8618
-    public class AdicionarUsuarioResponse
+    public class AtualizarUsuarioResponse
     {
         public int Id { get; set; }
         public string Nome { get; set; }

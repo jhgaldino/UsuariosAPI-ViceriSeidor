@@ -3,9 +3,9 @@ using UsuariosAPI_ViceriSeidor.src.Models;
 
 namespace UsuariosAPI_ViceriSeidor.src.Data
 {
-    public class AppDbContext : DbContext
+    public class UsuariosContext : DbContext
     {
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public UsuariosContext(DbContextOptions<UsuariosContext> options) : base(options)
         {
         }
 

@@ -2,13 +2,13 @@ using FluentValidation;
 using UsuariosAPI_ViceriSeidor.src.Data;
 using UsuariosAPI_ViceriSeidor.src.Models;
 using UsuariosAPI_ViceriSeidor.src.Services;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models;using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Adiciona os serviços ao container.
-builder.Services.AddScoped<UsuarioService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -17,8 +17,8 @@ builder.Services.AddSwaggerGen(c =>
 builder.Services.AddValidatorsFromAssemblies(new[] { typeof(Usuario).Assembly });
 
 // Adiciona o DbContext ao container.
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddDbContext<UsuariosContext>(options =>
+    options.UseInMemoryDatabase("Usuarios"));
 
 var app = builder.Build();
 
