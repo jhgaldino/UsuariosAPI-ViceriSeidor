@@ -2,9 +2,9 @@
 using UsuariosAPI_ViceriSeidor.src.Dtos;
 namespace UsuariosAPI_ViceriSeidor.src.Validations
 {
-    public class AtualizarFuncionarioRequestValidator : AbstractValidator<AtualizarUsuarioRequest>
+    public class AtualizarUsuarioRequestValidator : AbstractValidator<AtualizarUsuarioRequest>
     {
-        public AtualizarFuncionarioRequestValidator()
+        public AtualizarUsuarioRequestValidator()
         {
             // Validações para atualizar um usuário
             RuleFor(x => x.Nome)
