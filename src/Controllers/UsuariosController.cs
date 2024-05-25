@@ -32,7 +32,7 @@ namespace UsuariosAPI_ViceriSeidor.src.Controllers
         ///     "Nome": "Joao",
         ///     "Email": "email2@teste.com",
         ///     "Senha": "123456",
-        ///     "CPF":"90007533098",(OBS : Use um CPF real ou um gerado aleatoriamente)
+        ///     "CPF":"90007533098",(OBS : Use um CPF real ou um gerado aleatoriamente, sem pontos ou tracos)
         ///     "DataNasc":"2009-01-01"
         /// }
         /// </remarks>
@@ -127,7 +127,7 @@ namespace UsuariosAPI_ViceriSeidor.src.Controllers
         ///     "Nome": "Joao",
         ///     "Email": "email2@teste.com",
         ///     "Senha": "123456",
-        ///     "CPF":"90007533098",(OBS : Use um CPF real ou um gerado aleatoriamente)
+        ///     "CPF":"90007533098",(OBS : Use um CPF real ou um gerado aleatoriamente, sem pontos ou tracos)
         ///     "DataNasc":"2009-01-01"
         /// }
         /// <response code="200">Retorna os dados do usuário atualizado</response>
