@@ -17,6 +17,9 @@ Para executar este projeto, você precisará ter o .NET Core 3.1 ou superior insta
 3. Execute o comando `dotnet restore` para restaurar as dependências do projeto.
 4. Execute o comando `dotnet run` para iniciar a aplicação.
 
+# Swagger
+Você pode acessar a documentação da API através do Swagger. Para acessar o Swagger, basta abrir o navegador e digitar a URL `https://localhost:porta/swagger`. Substitua `porta` pela porta em que a aplicação está sendo executada.
+
 ## Recursos
 
 ### Rotas Assíncronas
@@ -35,6 +38,7 @@ Encapsulei a lógica de negócios dessa API em serviços. Isso mantém os controlado
 
 Utilizei a biblioteca FluentValidation para tornar o código de validação mais fácil de ler e manter.
 Também implementei regras de criação de usuário, como validação de CPF e e-mail e atualização de usuário.
+Utilizei a biblioteca ErrorOr para retornar erros de validação.
 
 
 ## Construído com
