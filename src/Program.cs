@@ -2,7 +2,9 @@ using FluentValidation;
 using UsuariosAPI_ViceriSeidor.src.Data;
 using UsuariosAPI_ViceriSeidor.src.Models;
 using UsuariosAPI_ViceriSeidor.src.Services;
-using Microsoft.OpenApi.Models;using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +14,16 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "UsuariosAPI_ViceriSeidor", Version = "v1" }));
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { 
+        Title = "UsuariosAPI_ViceriSeidor", 
+        Version = "v1",
+        Description = "Uma API REST para um aplicativo de gerenciamento de usuários, com base no conceito CRUD (Create, Read, Update, Delete)"
+    });
+    var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
+
+});
 // Adiciona validadores ao container.
 builder.Services.AddValidatorsFromAssemblies(new[] { typeof(Usuario).Assembly });
 
