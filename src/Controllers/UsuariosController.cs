@@ -68,7 +68,7 @@ namespace UsuariosAPI_ViceriSeidor.src.Controllers
         // Método de listagem de usuários
         /// <summary>
         /// Lista todos os Usuários e seus dados, exceto a senha.
-        /// 
+        /// é possível retornar somente dados nao sensíveis, porem não foi solicitado.
         /// </summary>
         /// <response code="200">Retorna os usuários cadastrados</response>
         /// <response code="404">Retorna que nenhum usuário não foi encontrado</response>
