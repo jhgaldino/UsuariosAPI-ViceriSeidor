@@ -29,6 +29,7 @@ namespace UsuariosAPI_ViceriSeidor.src.Controllers
         /// <remarks>
         /// Exemplo de requisição:
         /// {
+        /// 
         ///     "Nome": "Joao",
         ///     "Email": "email2@teste.com",
         ///     "Senha": "123456",
@@ -36,6 +37,8 @@ namespace UsuariosAPI_ViceriSeidor.src.Controllers
         ///     "DataNasc":"2009-01-01"
         /// }
         /// </remarks>
+        /// 
+        /// 
         /// <response code="201">Retorna os dados do usuário cadastrado</response>
         /// <response code="400">Retorna erro de validação de CPF ou email</response>
         /// <response code="409">Retorna conflito de dados de CPF ou email</response>
@@ -96,7 +99,7 @@ namespace UsuariosAPI_ViceriSeidor.src.Controllers
         ///         /api/usuarios/1
         /// </remarks>
         /// <response code="200">Retorna os dados do usuário cadastrado</response>
-        /// <response code="400">Retorna erro de validação de CPF ou email</response>
+        /// <response code="404">Retorna erro de usuário não encontrado</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<ListarUsuarioResponse>> GetId(int id)
         {

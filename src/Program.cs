@@ -5,6 +5,8 @@ using UsuariosAPI_ViceriSeidor.src.Services;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,7 @@ builder.Services.AddSwaggerGen(c =>
     c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));
 
 });
+builder.Services.AddHealthChecks();
 // Adiciona validadores ao container.
 builder.Services.AddValidatorsFromAssemblies(new[] { typeof(Usuario).Assembly });
 
@@ -40,6 +43,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "UsuariosAPI_ViceriSeidor v1"));
 }
+// Verificando a saúde da aplicação
+app.MapHealthChecks(
+    "/health",
+    new HealthCheckOptions()
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
 app.UseHttpsRedirection();
 

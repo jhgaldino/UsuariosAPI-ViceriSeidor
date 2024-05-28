@@ -18,7 +18,6 @@ namespace UsuariosAPI_ViceriSeidor.src.Validations
                 .WithMessage("Email inválido.")
                 .When(x => !string.IsNullOrEmpty(x.Email));
         }
-        // Como CPF é unico, não é possível alterar o CPF de um usuário
     }
 
 
