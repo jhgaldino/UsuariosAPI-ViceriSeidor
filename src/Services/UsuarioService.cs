@@ -4,19 +4,12 @@ using UsuariosAPI_ViceriSeidor.src.Data;
 using UsuariosAPI_ViceriSeidor.src.Dtos;
 using UsuariosAPI_ViceriSeidor.src.Models;
 using UsuariosAPI_ViceriSeidor.src.Extensions;
+using UsuariosAPI_ViceriSeidor.src.Inferfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace UsuariosAPI_ViceriSeidor.src.Services
 {
     // Interface de serviço de usuário
-    public interface IUsuarioService
-    {
-        Task<ErrorOr<AdicionarUsuarioResponse>> CadastrarUsuario(AdicionarUsuarioRequest request);
-        Task<IEnumerable<ListarUsuarioResponse>> ListarUsuarios();
-        Task<ErrorOr<ListarUsuarioResponse>> ListarUsuarioPorId(int id);
-        Task<ErrorOr<AtualizarUsuarioResponse>> AtualizarUsuario(int id, AtualizarUsuarioRequest request);
-        Task<ErrorOr<bool>> RemoverUsuarioPorId(int id);
-    }
 
 
     // Implementação do serviço de usuário

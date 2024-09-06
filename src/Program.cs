@@ -2,11 +2,14 @@ using FluentValidation;
 using UsuariosAPI_ViceriSeidor.src.Data;
 using UsuariosAPI_ViceriSeidor.src.Models;
 using UsuariosAPI_ViceriSeidor.src.Services;
+using UsuariosAPI_ViceriSeidor.src.Inferfaces;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using System.Net;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -50,6 +53,17 @@ app.MapHealthChecks(
     {
         ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
     });
+
+app.UseExceptionHandler(appError=>
+{
+    appError.Run(async context => {
+        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+        context.Response.ContentType = "application/json";
+
+        var contextFeature = context.Features.Get<IExceptionHandlerFeature>();
+    });
+});
+
 
 app.UseHttpsRedirection();
 
