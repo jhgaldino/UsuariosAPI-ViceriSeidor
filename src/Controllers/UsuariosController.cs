@@ -6,6 +6,7 @@ using UsuariosAPI_ViceriSeidor.src.Models;
 using UsuariosAPI_ViceriSeidor.src.Data;
 using UsuariosAPI_ViceriSeidor.src.Services;
 using UsuariosAPI_ViceriSeidor.src.Dtos;
+using UsuariosAPI_ViceriSeidor.src.Inferfaces;
 using Microsoft.AspNetCore.Http.Extensions;
 
 namespace UsuariosAPI_ViceriSeidor.src.Controllers
